@@ -34,37 +34,37 @@ if($_SESSION['role'] != 1){
   <!-- /.content-header -->
   <?php
 
-  // if (!empty($_GET['pageno'])) {
-  //    $pageno = $_GET['pageno'];
-  // } else {
-  //    $pageno = 1;
-  // }
-  // $pageRecord = 4;
-  // $offSet = ($pageno - 1) * $pageRecord;
+  if (!empty($_GET['pageno'])) {
+     $pageno = $_GET['pageno'];
+  } else {
+     $pageno = 1;
+  }
+  $pageRecord = 4;
+  $offSet = ($pageno - 1) * $pageRecord;
 
 
-  // if (empty($_POST['search'])) {
-  //   $stmt = $pdo->prepare("SELECT * FROM posts ORDER BY id DESC");
-  //   $stmt->execute();
-  //   $rawResult = $stmt->fetchAll();
-  //   $total_pages = ceil(count($rawResult) / $pageRecord);
+  if (empty($_POST['search'])) {
+    $stmt = $pdo->prepare("SELECT * FROM product ORDER BY id DESC");
+    $stmt->execute();
+    $rawResult = $stmt->fetchAll();
+    $total_pages = ceil(count($rawResult) / $pageRecord);
 
-  //   $stmt = $pdo->prepare("SELECT * FROM posts ORDER BY id DESC LIMIT $offSet,$pageRecord");
-  //   $stmt->execute();
-  //   $result = $stmt->fetchAll();
-  // } else {
-  //   $searchKey = $_POST['search'];
-  //   $stmt = $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%' ORDER BY id DESC");
-  //   $stmt->execute();
-  //   $rawResult = $stmt->fetchAll();
-  //   $total_pages = ceil(count($rawResult) / $pageRecord);
+    $stmt = $pdo->prepare("SELECT * FROM product ORDER BY id DESC LIMIT $offSet,$pageRecord");
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+  } else {
+    $searchKey = $_POST['search'];
+    $stmt = $pdo->prepare("SELECT * FROM product WHERE name LIKE '%$searchKey%' ORDER BY id DESC");
+    $stmt->execute();
+    $rawResult = $stmt->fetchAll();
+    $total_pages = ceil(count($rawResult) / $pageRecord);
 
-  //   $stmt = $pdo->prepare("SELECT * FROM posts WHERE title LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offSet,$pageRecord");
-  //   $stmt->execute();
-  //   $result = $stmt->fetchAll();
-  // }
+    $stmt = $pdo->prepare("SELECT * FROM product WHERE name LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offSet,$pageRecord");
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+  }
 
-  // ?>
+  ?>
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -77,14 +77,17 @@ if($_SESSION['role'] != 1){
 
             <div class="card-body">
               <div class="mb-3">
-                <a href="cat_add.php" class="btn btn-success" type="button">Create New</a>
+                <a href="product_add.php" class="btn btn-success" type="button">Create New Product</a>
               </div>
               <table class="table table-bordered">
                 <thead>
                   <tr>
                     <th style="width: 10px">ID</th>
-                    <th>Title</th>
-                    <th>Content</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
                     <th style="width: 40px">Action</th>
                   </tr>
                 </thead>
@@ -94,17 +97,29 @@ if($_SESSION['role'] != 1){
                   if ($result) {
                     $i = 1;
                     foreach ($result as $value) { ?>
+
+                    <?php 
+                    $catStmt = $pdo->prepare("SELECT * FROM categories WHERE id=".$value['category_id']);
+                    $catStmt->execute();
+                    $catResult = $catStmt->fetchAll();
+                    // echo "<pre>";
+                    // print_r($catResult);
+                    // exit();
+                    ?>
                       <tr>
                         <td><?php echo $i ?></td>
-                        <td><?php echo escape($value['title']) ?></td>
-                        <td><?php echo escape(substr($value['content'], 0, 50)) ?></td>
+                        <td><?php echo escape($value['name']) ?></td>
+                        <td><?php echo escape(substr($value['description'], 0, 50)) ?></td>
+                        <td><?php echo escape($catResult[0]['name']) ?></td>
+                        <td><?php echo escape($value['price']) ?></td>
+                        <td><?php echo escape($value['quantity']) ?></td>
                         <td>
                           <div class="btn-group">
                             <div class="container">
-                              <a href="edit.php?id=<?php echo $value['id'] ?>" class="btn btn-warning" type="button">Edit</a>
+                              <a href="product_edit.php?id=<?php echo $value['id'] ?>" class="btn btn-warning" type="button">Edit</a>
                             </div>
                             <div class="container">
-                              <a href="delete.php?id=<?php echo $value['id'] ?>" onclick="return confirm('Are you sure delete this item?')" class="btn btn-danger" type="button">Delete</a>
+                              <a href="product_delete.php?id=<?php echo $value['id'] ?>" onclick="return confirm('Are you sure delete this item?')" class="btn btn-danger" type="button">Delete</a>
                             </div>
                           </div>
                         </td>

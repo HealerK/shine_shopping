@@ -54,21 +54,15 @@
           <div class="navbar-search-block">
             <?php
             $nowlink = $_SERVER['PHP_SELF'];
-            $linkArray = explode('/',$nowlink);
+            $linkArray = explode('/', $nowlink);
             $page = end($linkArray);
             ?>
 
-            <form class="form-inline" 
-            <?php if($page == 'user_add_list.php') :?>
-              action="user_add_list.php"
-              <?php elseif ($page == 'category.php') :?>
-                action="category.php"
-                <?php elseif($page == 'index.php') :?>
-                  action="index.php"
-                <?php endif?>
-               method="post">
+            <?php if ($page != 'order_list.php') { ?>
+              <form class="form-inline" <?php if ($page == 'user_add_list.php') : ?> action="user_add_list.php" <?php elseif ($page == 'category.php') : ?> action="category.php" <?php elseif ($page == 'index.php') : ?> action="index.php" <?php endif ?> method="post">
+              
               <div class="input-group input-group-sm">
-              <input name="_token" type="hidden" value="<?php echo $_SESSION['_token']?>">
+                <input name="_token" type="hidden" value="<?php echo $_SESSION['_token'] ?>">
                 <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
                 <div class="input-group-append">
                   <button class="btn btn-navbar" type="submit">
@@ -79,7 +73,8 @@
                   </button>
                 </div>
               </div>
-            </form>
+              </form>
+              <?php } ?>
           </div>
         </li>
         <li class="nav-item">
@@ -107,7 +102,7 @@
             <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" />
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php echo $_SESSION['username']?></a>
+            <a href="#" class="d-block"><?php echo $_SESSION['username'] ?></a>
           </div>
         </div>
 
@@ -150,6 +145,16 @@
               <a href="user_add_list.php" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
                 <p>User</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item">
+              <a href="order_list.php" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>Order</p>
               </a>
             </li>
           </ul>
