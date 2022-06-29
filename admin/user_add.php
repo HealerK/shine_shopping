@@ -81,7 +81,7 @@ if ($_POST) {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Create New Category</h1>
+                    <h1 class="m-0">Create New User</h1>
                 </div>
             </div>
             <div class="card">
@@ -115,7 +115,7 @@ if ($_POST) {
                   </div>
                   <div class="form-group">
                     <input type="submit" class="btn btn-success" name="" value="SUBMIT">
-                    <a href="user_list.php" class="btn btn-warning">Back</a>
+                    <a href="user_add_list.php" class="btn btn-warning">Back</a>
                   </div>
                 </form>
                 </div>

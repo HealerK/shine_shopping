@@ -46,42 +46,43 @@
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
-        <!-- Navbar Search -->
-        <li class="nav-item">
-          <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-            <i class="fas fa-search"></i>
-          </a>
-          <div class="navbar-search-block">
-            <?php
-            $nowlink = $_SERVER['PHP_SELF'];
-            $linkArray = explode('/', $nowlink);
-            $page = end($linkArray);
-            ?>
-
-            <?php if ($page != 'order_list.php') { ?>
+        <?php
+        $nowlink = $_SERVER['PHP_SELF'];
+        $linkArray = explode('/', $nowlink);
+        $page = end($linkArray);
+        ?>
+        <?php if($page == 'user_add_list.php' || $page == 'category.php' || $page == 'index.php'){ ?>
+        <?php if ($page != 'order_list.php') { ?>
+          <!-- Navbar Search -->
+          <li class="nav-item">
+            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+              <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block">
               <form class="form-inline" <?php if ($page == 'user_add_list.php') : ?> action="user_add_list.php" <?php elseif ($page == 'category.php') : ?> action="category.php" <?php elseif ($page == 'index.php') : ?> action="index.php" <?php endif ?> method="post">
-              
-              <div class="input-group input-group-sm">
-                <input name="_token" type="hidden" value="<?php echo $_SESSION['_token'] ?>">
-                <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
-                <div class="input-group-append">
-                  <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                    <i class="fas fa-times"></i>
-                  </button>
+                <div class="input-group input-group-sm">
+                  <input name="_token" type="hidden" value="<?php echo $_SESSION['_token'] ?>">
+                  <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
+                  <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                      <i class="fas fa-search"></i>
+                    </button>
+                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
                 </div>
-              </div>
               </form>
-              <?php } ?>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
-          </a>
-        </li>
+            <?php
+        }
+          } ?>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+              <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -91,7 +92,7 @@
       <!-- Brand Logo -->
       <a href="index.php" class="brand-link">
         <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: 0.8" />
-        <span class="brand-text font-weight-light">Product Panel</span>
+        <span class="brand-text font-weight-light">Admin Panel</span>
       </a>
 
       <!-- Sidebar -->

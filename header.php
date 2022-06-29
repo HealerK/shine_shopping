@@ -46,7 +46,7 @@ require_once "./config/common.php";
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="index.html"><h4>Shine Shopping<h4></a>
+					<a class="navbar-brand logo_h" href="index.php"><h4>Shine Shopping<h4></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
@@ -56,7 +56,16 @@ require_once "./config/common.php";
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav navbar-right">
-							<li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
+							<?php 
+							$cart = 0;
+							if(isset($_SESSION['cart'])){
+								foreach($_SESSION['cart'] as $key=>$qty){
+									$cart += $qty;
+								}
+							}
+							
+							?>
+							<li class="nav-item"><a href="cart.php" class="cart"><span class="ti-bag"><?php echo $cart?></span></a></li>
 							<li class="nav-item">
 								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
 							</li>

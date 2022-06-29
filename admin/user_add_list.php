@@ -11,6 +11,15 @@ if ($_SESSION['role'] != 1) {
   header('Location: login.php');
 }
 
+if(isset($_POST['search'])) {
+  setcookie('search',$_POST['search'],time()+(8400*30),"/");
+}else{
+  if(empty($_GET['pageno'])){
+    unset($_COOKIE['search']);
+    setcookie('search','NULL',-1,"/");
+  }
+}
+
 ?>
 
 <?php include_once "header.php" ?>
@@ -49,7 +58,7 @@ if ($_SESSION['role'] != 1) {
     }
   }
 
-  if (empty($_POST['search'])) {
+  if (empty($_POST['search']) && empty($_COOKIE['search'])) {
     $stmt = $pdo->prepare("SELECT * FROM users ORDER BY id DESC");
     $stmt->execute();
     $rawResult = $stmt->fetchAll();
@@ -59,7 +68,7 @@ if ($_SESSION['role'] != 1) {
     $stmt->execute();
     $result = $stmt->fetchAll();
   } else {
-    $searchKey = $_POST['search'] ? $_POST['search'] : $_COOKIE['search'];
+    $searchKey = isset($_POST['search']) ? $_POST['search'] : $_COOKIE['search'];
     $stmt = $pdo->prepare("SELECT * FROM users WHERE name LIKE '%$searchKey%' ORDER BY id DESC");
     $stmt->execute();
     $rawResult = $stmt->fetchAll();
@@ -91,6 +100,8 @@ if ($_SESSION['role'] != 1) {
                     <th style="width: 10px">ID</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
                     <th>
                       Role
                     </th>
@@ -107,6 +118,8 @@ if ($_SESSION['role'] != 1) {
                         <td><?php echo $i ?></td>
                         <td><?php echo escape($value['name']) ?></td>
                         <td><?php echo escape($value['email']) ?></td>
+                        <td><?php echo escape($value['phone']) ?></td>
+                        <td><?php echo escape($value['address']) ?></td>
                         <td><?php if ($value['role'] == 1) {
                               echo escape("Admin");
                             } else {

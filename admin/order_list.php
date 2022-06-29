@@ -11,6 +11,14 @@ if ($_SESSION['role'] != 1) {
     header('Location: login.php');
 }
 
+if(isset($_POST['search'])) {
+    setcookie('search',$_POST['search'],time()+(8400*30),"/");
+  }else{
+    if(empty($_GET['pageno'])){
+      unset($_COOKIE['search']);
+      setcookie('search','NULL',-1,"/");
+    }
+  }
 ?>
 
 <?php include_once "header.php" ?>
