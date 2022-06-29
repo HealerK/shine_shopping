@@ -87,6 +87,9 @@ if ($_SESSION['role'] != 1) {
                                             $statement = $pdo->prepare("SELECT * FROM users WHERE id=" . $value['customer_id']);
                                             $statement->execute();
                                             $user = $statement->fetchAll(); 
+                                            // echo "<pre>";
+                                            // print_r($user);
+                                            // exit();
                                             ?>
                                             <tr>
                                                 <td><?php echo $i ?></td>

@@ -1,39 +1,45 @@
-<?php include('header.html') ?>
+<?php include_once "header.php";
+require_once "./config/config.php";
+?>
 <!--================Single Product Area =================-->
 <div class="product_image_area">
   <div class="container">
+  <?php 
+        $id = $_GET['id'];
+        $stmt = $pdo->prepare("SELECT * FROM product WHERE id=:id");
+        $stmt->execute(array(
+          ':id' => $id
+        ));
+        $result= $stmt->fetchAll();
+        // echo "<pre>";
+        // print_r($result);
+        // exit();
+        ?>
     <div class="row s_product_inner">
+    <?php foreach($result as $value){?>
       <div class="col-lg-6">
-        <div class="s_Product_carousel">
-          <div class="single-prd-item">
-            <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-          </div>
-          <div class="single-prd-item">
-            <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-          </div>
-          <div class="single-prd-item">
-            <img class="img-fluid" src="img/category/s-p1.jpg" alt="">
-          </div>
-        </div>
+            <img class="img-fluid" src="./images/<?php echo escape($value['image'])?>" style="height:100%;width:100%;">
       </div>
       <div class="col-lg-5 offset-lg-1">
         <div class="s_product_text">
-          <h3>Faded SkyBlu Denim Jeans</h3>
-          <h2>$149.99</h2>
+          <h3><?php echo escape($value['name'])?></h3>
+          <h2>$<?php echo escape($value['price'])?></h2>
           <ul class="list">
-            <li><a class="active" href="#"><span>Category</span> : Household</a></li>
-            <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+          <?php
+						$catStmt = $pdo->prepare("SELECT * FROM categories ORDER BY id DESC");
+						$catStmt->execute();
+						$catResult = $catStmt->fetchAll();
+						?>
+						<?php foreach ($catResult as $values) { ?>
+            <li><span>Category</span> : <?php echo escape($values['name'])?></li>
+            <?php }?>
+            <li><span>Availibility</span> : In Stock</li>
           </ul>
-          <p>Mill Oil is an innovative oil filled radiator with the most modern technology. If you are looking for
-            something that can make your interior look awesome, and at the same time give you the pleasant warm feeling
-            during the winter.</p>
+          <p><?php echo $value['description']?></p>
           <div class="product_count">
             <label for="qty">Quantity:</label>
-            <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-             class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
-            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-             class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+            <input type="text" name="qty" id="sst" maxlength="12" value="<?php echo escape($value['quantity'])?>" title="Quantity:" class="input-text qty">
+            
           </div>
           <div class="card_area d-flex align-items-center">
             <a class="primary-btn" href="#">Add to Cart</a>
@@ -41,9 +47,10 @@
         </div>
       </div>
     </div>
+    <?php }?>
   </div>
 </div><br>
 <!--================End Single Product Area =================-->
 
 <!--================End Product Description Area =================-->
-<?php include('footer.php');?>
+<?php include_once "footer.php";?>

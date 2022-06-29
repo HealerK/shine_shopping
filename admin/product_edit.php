@@ -49,6 +49,7 @@ if (isset($_POST['submit'])) {
             $image_name = $_FILES['image']['name'];
             $image = pathinfo($image_name, PATHINFO_EXTENSION);
             if ($image != 'png' && $image != 'jpeg' && $image != 'jpg') {
+                echo "<script>alert('Your image must be jpeg,jpg or png.')</script>";
             } else {
                 $name = $_POST['name'];
                 $description = $_POST['description'];
@@ -66,7 +67,7 @@ if (isset($_POST['submit'])) {
                         ':category_id' => $category,
                         ':price' => $price,
                         ':quantity' => $quantity,
-                        ':image' => $image,
+                        ':image' => $image_name,
                         ':id' => $id
                     )
                 );
@@ -105,7 +106,7 @@ $statement->execute();
 $result = $statement->fetchAll();
 // echo "<pre>";
 // print_r($result);
-// exit();
+
 ?>
 <?php include_once "header.php" ?>
 
@@ -123,7 +124,6 @@ $result = $statement->fetchAll();
                     <?php foreach ($result as $value) {
                     ?>
                         <form action="" method="post" enctype="multipart/form-data">
-
                             <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
                             <input type="hidden" name="id" value="<?php echo $value['id'] ?>">
                             <div class="form-group">
@@ -173,7 +173,7 @@ $result = $statement->fetchAll();
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-success" value="SUBMIT" name="submit">
-                                <a href="category.php" class="btn btn-info" type="button">Back</a>
+                                <a href="index.php" class="btn btn-info" type="button">Back</a>
                             </div>
                         </form>
                     <?php } ?>

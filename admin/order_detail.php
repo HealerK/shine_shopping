@@ -74,7 +74,6 @@ $result = $stmt->fetchAll();
                                         $i = 1;
                                         foreach ($result as $value) {
                                     ?>
-
                                             <?php
                                             $statement = $pdo->prepare("SELECT * FROM product WHERE id=" . $value['product_id']);
                                             $statement->execute();
