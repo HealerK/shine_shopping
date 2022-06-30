@@ -20,18 +20,15 @@
                         <?php
                         require_once "./config/config.php";
                         $total = 0;
-                        foreach ($_SESSION['cart'] as $key => $qty) :
-                            if (isset($_SESSION['cart'])) {
-                               
+                        if (isset($_SESSION['cart'])) {   
+                        foreach ($_SESSION['cart'] as $key => $qty) {                                                     
                                 $id = str_replace('id', '', $key);
                                 $stmt = $pdo->prepare("SELECT * FROM product WHERE id=:id");
                                 $stmt->execute(array(
                                     ':id' => $id
                                 ));
                                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                                $total += $result['price'] * $qty;
-                                
-                            }
+                                $total += $result['price'] * $qty;                          
                         ?>
                             <tr>
                                 <td>
@@ -60,7 +57,8 @@
                                     <a href="cart_item_clear.php?pid=<?php echo $result['id']?>" class="btn btn-danger">Clear</a>
                                 </td>
                             </tr>
-                        <?php endforeach ?>
+                        <?php } 
+                        }?>
                         <tr>
                             <td>
 

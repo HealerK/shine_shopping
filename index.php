@@ -51,12 +51,12 @@ if (empty($_POST['search']) && empty($_COOKIE['search'])) {
 	}
 } else {
 	$searchKey = isset($_POST['search']) ? $_POST['search'] : $_COOKIE['search'];
-	$stmt = $pdo->prepare("SELECT * FROM product WHERE name AND quantity > 0 LIKE '%$searchKey%' ORDER BY id DESC");
+	$stmt = $pdo->prepare("SELECT * FROM product WHERE name LIKE '%$searchKey%'  AND quantity > 0  ORDER BY id DESC");
 	$stmt->execute();
 	$rawResult = $stmt->fetchAll();
 	$total_pages = ceil(count($rawResult) / $pageRecord);
 
-	$stmt = $pdo->prepare("SELECT * FROM product WHERE name AND quantity > 0 LIKE '%$searchKey%' ORDER BY id DESC LIMIT $offSet,$pageRecord");
+	$stmt = $pdo->prepare("SELECT * FROM product WHERE name LIKE '%$searchKey%'  AND quantity > 0  ORDER BY id DESC LIMIT $offSet,$pageRecord");
 	$stmt->execute();
 	$result = $stmt->fetchAll();
 }

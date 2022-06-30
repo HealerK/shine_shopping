@@ -2,6 +2,9 @@
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
+if (empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
+	header('Location: login.php');
+  }
 require_once "./config/common.php";
 
 ?>
@@ -92,8 +95,8 @@ require_once "./config/common.php";
 		<div class="container">
 			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
 				<div class="col-first">
-					<h1>Welcome</h1>
-
+					<h1>Welcome <?php echo $_SESSION['username'];?></h1>
+					<a href="logout.php" class="btn btn-warning">Logout</a>		
 				</div>
 			</div>
 		</div>

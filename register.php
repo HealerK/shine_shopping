@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
                                 <p class="text-red"><?php echo empty($passwordError) ? '' : $passwordError ?></p>
                             </div>
                             <div class="col-md-12 form-group mb-5">
-                                <input style="<?php echo empty($phoneError) ? '' : 'border:1px solid red'; ?>" type="number" class="form-control" id="name" name="phone" placeholder="Phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'">
+                                <input style="<?php echo empty($phoneError) ? '' : 'border:1px solid red'; ?>" type="text" class="form-control" id="name" name="phone" placeholder="Phone" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Phone'">
                             </div>
                             <div class="col-md-12 form-group mb-5">
                                 <input style="<?php echo empty($addressError) ? '' : 'border:1px solid red'; ?>" type="text" class="form-control" id="name" name="address" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'">

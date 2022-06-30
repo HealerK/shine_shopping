@@ -4,6 +4,10 @@ session_start();
 require_once "./config/common.php";
 require_once "./config/config.php";
 
+if (empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
+	header('Location: login.php');
+}
+
 if (isset($_SESSION['cart'])) {
 	$user_id = $_SESSION['user_id'];
 
@@ -31,7 +35,7 @@ if (isset($_SESSION['cart'])) {
 	if ($sresult) {
 		$sale_order_id = $pdo->lastInsertId();
 		foreach ($_SESSION['cart'] as $key => $qty) {
-			$id = str_replace('id', '', $key);		
+			$id = str_replace('id', '', $key);
 			$stmt = $pdo->prepare("INSERT INTO sale_order_detail(sale_order_id,product_id,quantity) VALUES (:oid,:pid,:qty)");
 			$dresult = $stmt->execute(
 				array(
@@ -40,10 +44,10 @@ if (isset($_SESSION['cart'])) {
 					':qty' => $qty
 				)
 			);
-			$qtystmt = $pdo->prepare("SELECT quantity FROM product WHERE id=".$id);
+			$qtystmt = $pdo->prepare("SELECT quantity FROM product WHERE id=" . $id);
 			$qtystmt->execute();
 			$qresult = $qtystmt->fetch(PDO::FETCH_ASSOC);
-			
+
 			$updateQty = $qresult['quantity'] - $qty;
 
 			$upstmt = $pdo->prepare("UPDATE product SET quantity=:qty WHERE id=:id");
@@ -52,10 +56,10 @@ if (isset($_SESSION['cart'])) {
 					':qty' => $updateQty,
 					':id' => $id
 				)
-				);
+			);
+		}
+		unset($_SESSION['cart']);
 	}
-	unset($_SESSION['cart']);
-}
 }
 ?>
 
