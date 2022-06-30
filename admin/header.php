@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css" />
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -51,38 +52,38 @@
         $linkArray = explode('/', $nowlink);
         $page = end($linkArray);
         ?>
-        <?php if($page == 'user_add_list.php' || $page == 'category.php' || $page == 'index.php'){ ?>
-        <?php if ($page != 'order_list.php') { ?>
-          <!-- Navbar Search -->
-          <li class="nav-item">
-            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-              <i class="fas fa-search"></i>
-            </a>
-            <div class="navbar-search-block">
-              <form class="form-inline" <?php if ($page == 'user_add_list.php') : ?> action="user_add_list.php" <?php elseif ($page == 'category.php') : ?> action="category.php" <?php elseif ($page == 'index.php') : ?> action="index.php" <?php endif ?> method="post">
-                <div class="input-group input-group-sm">
-                  <input name="_token" type="hidden" value="<?php echo $_SESSION['_token'] ?>">
-                  <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
-                  <div class="input-group-append">
-                    <button class="btn btn-navbar" type="submit">
-                      <i class="fas fa-search"></i>
-                    </button>
-                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                      <i class="fas fa-times"></i>
-                    </button>
+        <?php if ($page == 'user_add_list.php' || $page == 'category.php' || $page == 'index.php') { ?>
+          <?php if ($page != 'order_list.php') { ?>
+            <!-- Navbar Search -->
+            <li class="nav-item">
+              <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                <i class="fas fa-search"></i>
+              </a>
+              <div class="navbar-search-block">
+                <form class="form-inline" <?php if ($page == 'user_add_list.php') : ?> action="user_add_list.php" <?php elseif ($page == 'category.php') : ?> action="category.php" <?php elseif ($page == 'index.php') : ?> action="index.php" <?php endif ?> method="post">
+                  <div class="input-group input-group-sm">
+                    <input name="_token" type="hidden" value="<?php echo $_SESSION['_token'] ?>">
+                    <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
+                    <div class="input-group-append">
+                      <button class="btn btn-navbar" type="submit">
+                        <i class="fas fa-search"></i>
+                      </button>
+                      <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </form>
+                </form>
             <?php
-        }
-          } ?>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-              <i class="fas fa-expand-arrows-alt"></i>
-            </a>
-          </li>
+          }
+        } ?>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                <i class="fas fa-expand-arrows-alt"></i>
+              </a>
+            </li>
       </ul>
     </nav>
     <!-- /.navbar -->
@@ -157,6 +158,47 @@
                 <i class="nav-icon fas fa-table"></i>
                 <p>Order</p>
               </a>
+            </li>
+          </ul>
+        </nav>
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+            <li class="nav-item menu">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Repoter
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="weekly_report.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Weekly Report</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="monthly_report.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Monthly Report</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="royal_cus.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Royal Customer</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="best_seller.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Best Seller Items</p>
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </nav>
